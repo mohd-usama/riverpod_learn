@@ -39,6 +39,7 @@ dependencies:
   http: ^1.1.0
   sqflite: ^2.3.2
   path:
+  flutter_typeahead: ^6.0.0
 
 dev_dependencies:
   flutter_test:

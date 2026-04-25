@@ -45,6 +45,14 @@ class SignupNotifier extends StateNotifier<SignUpState> {
     state = state.copyWith(termAndCondition: value);
   }
 
+  void updateQualificationVaue(String value) {
+    state = state.copyWith(qualification: value);
+  }
+
+  void updateCity(String value) {
+    state = state.copyWith(city: value);
+  }
+
   bool validation(BuildContext context) {
     if (state.name.trim().isEmpty) {
       showMsg(context, "Please Enter Name");

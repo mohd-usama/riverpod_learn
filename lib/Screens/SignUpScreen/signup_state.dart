@@ -5,6 +5,8 @@ class SignUpState {
   final String password;
   final bool passwordHide;
   final String gender;
+  final String qualification;
+  final String city;
   final double age;
   final String radioValue;
   final bool termAndCondition;
@@ -17,6 +19,8 @@ class SignUpState {
       this.password = "",
       this.passwordHide = false,
       this.gender = "Male",
+      this.qualification = "Select",
+      this.city="",
       this.age = 0,
       this.radioValue = "Male",
       this.termAndCondition = false,
@@ -29,6 +33,8 @@ class SignUpState {
     String? password,
     bool? passwordHide,
     String? gender,
+    String? qualification,
+    String? city,
     double? age,
     String? radioValue,
     bool? termAndCondition,
@@ -38,9 +44,11 @@ class SignUpState {
         name: name ?? this.name,
         email: email ?? this.email,
         phoneNo: phoneNo ?? this.phoneNo,
-        password: password??this.password,
+        password: password ?? this.password,
         passwordHide: passwordHide ?? this.passwordHide,
         gender: gender ?? this.gender,
+        qualification: qualification ?? this.qualification,
+        city: city ?? this.city,
         age: age ?? this.age,
         radioValue: radioValue ?? this.radioValue,
         termAndCondition: termAndCondition ?? this.termAndCondition,

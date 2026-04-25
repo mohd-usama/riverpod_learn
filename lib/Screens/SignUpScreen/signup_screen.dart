@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:riverpod_learn/Helper/custom_autoComplete.dart';
+import 'package:riverpod_learn/Helper/custom_drop_down.dart';
 import 'package:riverpod_learn/Helper/custom_text_field.dart';
 import 'package:riverpod_learn/Screens/SignUpScreen/signup_notifier.dart';
 
@@ -16,6 +19,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   late TextEditingController emailCtr;
   late TextEditingController phoneCtr;
   late TextEditingController passwordCtr;
+  late TextEditingController cityCtr;
+
+  List<String> dropdownList = ["Select", "Male", "Female", "Others"];
+  List<String> cityList = ["Delhi", "Mumbai", "Kolkata", "Ahmedabad", "Bangalore"];
+
+  SuggestionsController<String> suggestionCtr = SuggestionsController();
+  FocusNode cityFocus = FocusNode();
 
   @override
   void initState() {
@@ -25,6 +35,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     phoneCtr = TextEditingController();
     passwordCtr = TextEditingController();
     emailCtr = TextEditingController();
+    cityCtr = TextEditingController();
   }
 
   @override
@@ -34,6 +45,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     nameCtr.dispose();
     emailCtr.dispose();
     passwordCtr.dispose();
+    cityCtr.dispose();
     phoneCtr.dispose();
   }
 
@@ -82,9 +94,32 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       suffixIcon: IconButton(
                           onPressed: notifier.passwordVisibility,
                           icon: Icon(state.passwordHide ? Icons.visibility : Icons.visibility_off))),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: CustomDropDown.customDropDownFiled(
+                        defaultValue: state.qualification,
+                        dropDownList: dropdownList,
+                        onChanged: (String? newValue) {
+                          notifier.updateQualificationVaue(newValue!);
+                        }),
+                  ),
+                  CustomAutoComplete.customAutoCompleteField(
+                    suggestionsController: suggestionCtr,
+                    controller: cityCtr,
+                    focusNode: cityFocus,
+                    listData: cityList,
+                    onChanged: (data) {
+                      notifier.updateCity(data);
+                    },
+                    onSelected: (v) {
+                      notifier.updateCity(v);
+                      suggestionCtr.close();
+                      cityFocus.unfocus();
+                    },
+                  ),
                   Row(
                     children: [
-                      Text("Terms and condition apply"),
+                      const Text("Terms and condition apply"),
                       Checkbox(
                           value: state.termAndCondition,
                           onChanged: (v) {
