@@ -9,9 +9,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DBHelper.initDatabase();
   runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
+    const ProviderScope(child: MyApp()),
   );
 }
 
