@@ -128,7 +128,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     ],
                   ),
                   Row(
-                    children: [Expanded(child: Text("Age Slider")), Text("Age is ${state.age.toStringAsFixed(0)}")],
+                    children: [const Expanded(child: Text("Age Slider")), Text("Age is ${state.age.toStringAsFixed(0)}")],
                   ),
                   Slider(
                       max: 100,
@@ -137,7 +137,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       onChanged: (v) {
                         notifier.updateAge(v);
                       }),
-                  Text("Select Gender"),
+                  const Text("Select Gender"),
                   Row(
                     children: [
                       Expanded(
@@ -177,7 +177,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           },
                     child: state.isLoading ? const CircularProgressIndicator() : const Text("SignUp"),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   RichText(
                       text: TextSpan(
                           text: "Already have an account ? ",
