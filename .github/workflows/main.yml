@@ -15,14 +15,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Setup Java (Required for Android build)
+      # 2. Setup Java
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      # 3. Setup Flutter (MATCH with your local version)
+      # 3. Setup Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -36,18 +36,21 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # 6. Fix Gradle permission (important)
-      - name: Grant execute permission to Gradle
-        run: chmod +x android/gradlew
+      # 6. Get version from pubspec.yaml
+      - name: Get version
+        id: version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: //g' | cut -d '+' -f 1)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      # 7. Build APK (Release)
+      # 7. Build APK
       - name: Build APK
         run: flutter build apk --release --split-per-abi
 
-      # 8. Upload APK to GitHub Releases
+      # 8. Upload to GitHub Releases
       - name: Upload to GitHub Releases
         uses: ncipollo/release-action@v1
         with:
           artifacts: build/app/outputs/apk/release/*.apk
-          tag: v1.0.${{ github.run_number }}
+          tag: v${{ env.VERSION }}
           token: ${{ secrets.TOKEN }}
